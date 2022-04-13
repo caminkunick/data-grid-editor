@@ -5,12 +5,13 @@ import { DataGridController } from './data.grid.controller'
 import { SmallButton } from './small.button'
 
 export const ColumnAction = () => {
-  const { data, setData } = useDGE()
+  const { data, setData, onChange } = useDGE()
 
   const handleAddColumn = () => {
     const newData = new DataGridController(data)
     newData.column.add()
     setData(newData.data())
+    onChange?.(newData.data())
   }
 
   return (

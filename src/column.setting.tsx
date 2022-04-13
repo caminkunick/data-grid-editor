@@ -16,7 +16,7 @@ export const ColumnSetting = ({
   index: number
   onExit: () => void
 }) => {
-  const { data, setData } = useDGE()
+  const { data, setData, onChange } = useDGE()
 
   const handleColumnChange =
     (index: number, field: string) =>
@@ -24,6 +24,7 @@ export const ColumnSetting = ({
       const newData = new DataGridController(data)
       newData.column.change(index, field, value)
       setData(newData.data())
+      onChange?.(newData.data())
     }
   const handleRemoveColumn = (index: number) => () => {
     const label = 'Do you want to remove this column?'
@@ -31,12 +32,14 @@ export const ColumnSetting = ({
       const newData = new DataGridController(data)
       newData.column.remove(index)
       setData(newData.data())
+      onChange?.(newData.data())
     }
   }
   const handleInsertColumn = () => {
     const newData = new DataGridController(data)
     newData.column.insert(index)
     setData(newData.data())
+    onChange?.(newData.data())
   }
 
   return (

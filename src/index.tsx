@@ -41,16 +41,11 @@ export const DataGridEditor = (props: DataGridEditorProps) => {
     const newData = new DataGridController(data)
     newData.row.change(params)
     setData(newData.data())
+    props.onChange?.(newData.data())
   }
   const handleColumnHeaderSelect = (params: GridColumnHeaderParams) => {
     setColumnSelect(params.field)
   }
-
-  React.useEffect(() => {
-    if (data && props.onChange) {
-      props.onChange(data)
-    }
-  }, [data])
 
   React.useEffect(() => {
     if (props.value && JSON.stringify(props.value) !== JSON.stringify(data)) {
@@ -60,7 +55,7 @@ export const DataGridEditor = (props: DataGridEditorProps) => {
 
   return (
     <DataGridEditorContext.Provider
-      value={{ data, setData, selection, setSelection }}
+      value={{ ...props, data, setData, selection, setSelection }}
     >
       <Root>
         <ActionBox display={'flex'}>

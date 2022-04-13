@@ -5,12 +5,13 @@ import { DataGridController } from './data.grid.controller'
 import { SmallButton } from './small.button'
 
 export const RowAction = () => {
-  const { selection, setSelection, data, setData } = useDGE()
+  const { selection, setSelection, data, setData, onChange } = useDGE()
 
   const handleAddRow = () => {
     const newData = new DataGridController(data)
     newData.row.add()
     setData(newData.data())
+    onChange?.(newData.data())
   }
   const handleInsert = () => {
     if (selection.length === 1) {
@@ -18,6 +19,7 @@ export const RowAction = () => {
       const newData = new DataGridController(data)
       newData.row.insert(index)
       setData(newData.data())
+      onChange?.(newData.data())
     }
   }
   const handleRemoveSelection = () => {
@@ -26,6 +28,7 @@ export const RowAction = () => {
       const newData = new DataGridController(data)
       newData.row.remove(selection)
       setData(newData.data())
+      onChange?.(newData.data())
       setSelection([])
     }
   }
@@ -45,10 +48,7 @@ export const RowAction = () => {
           Add
         </SmallButton>
         {selection.length === 1 && (
-          <SmallButton
-            icon={['fas', 'arrow-right']}
-            onClick={handleInsert}
-          >
+          <SmallButton icon={['fas', 'arrow-right']} onClick={handleInsert}>
             Insert
           </SmallButton>
         )}

@@ -24,7 +24,7 @@ export interface DataGridEditorProps {
   }
 }
 
-export interface DataGridEditorContextTypes {
+export interface DataGridEditorContextTypes extends Pick<DataGridEditorProps, "onChange"> {
   data: DataGridEditorData
   setData: React.Dispatch<React.SetStateAction<DataGridEditorData>>
   selection: string[]
